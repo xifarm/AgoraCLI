@@ -7,9 +7,10 @@
 #include "AgoraClrRawFrameObserver.h"
 #include "AgoraClrAudioDeviceManager.h"
 #include "AgoraClrVideoDeviceManager.h"
-
+#include <msclr\marshal_cppstd.h>
 #include <string>
 
+using namespace msclr::interop;
 using namespace System;
 using namespace System::Runtime::InteropServices;
 using namespace System::Collections::Generic;
@@ -17,11 +18,21 @@ using namespace System::Collections::Generic;
 namespace AgoraClrLibrary {
 
 	static std::string MarshalString(String ^s) {
-		if (s == nullptr) return std::string();
+		/*if (s == nullptr) return std::string();
 		IntPtr middleStr = Runtime::InteropServices::Marshal::StringToHGlobalUni(s);
 		std::string result((char *)middleStr.ToPointer());
 		Runtime::InteropServices::Marshal::FreeHGlobal(middleStr);
-		return result;
+		return result;*/
+
+		if (s == nullptr) return std::string();
+
+		marshal_context^ context = gcnew marshal_context();
+		const char* name1 = context->marshal_as<const char*>(s);
+
+		char* pch = _strdup(name1); //const char* => char*
+		delete context;
+
+		return std::string(pch);
 	}
 
 	public enum class VideoProfile
