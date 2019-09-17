@@ -236,26 +236,6 @@ int AgoraClrLibrary::AgoraClr::setVideoQualityParameters(bool preferFrameRateOve
 	return params.setVideoQualityParameters(preferFrameRateOverImageQuality);
 }
 
-int AgoraClrLibrary::AgoraClr::setVideoCompositingLayout(ClrVideoCompositingLayout ^ sei)
-{
-	if (sei == nullptr) return rtcEngine->setVideoCompositingLayout(VideoCompositingLayout());
-	else return rtcEngine->setVideoCompositingLayout(*sei->toRaw());
-}
-
-int AgoraClrLibrary::AgoraClr::clearVideoCompositingLayout()
-{
-	return rtcEngine->clearVideoCompositingLayout();
-}
-
-int AgoraClrLibrary::AgoraClr::configPublisher(ClrPublisherConfiguration ^ config)
-{
-#if defined(_WIN32)
-	return rtcEngine->configPublisher(*config->toRaw());
-#else
-	return 0;
-#endif
-}
-
 int AgoraClr::setChannelProfile(ChannelProfile profile)
 {
 	return rtcEngine->setChannelProfile((agora::rtc::CHANNEL_PROFILE_TYPE)profile);

@@ -224,7 +224,6 @@ namespace AgoraClrLibrary {
 			width = stats.width;
 			height = stats.height;
 			receivedBitrate = stats.receivedBitrate;
-			receivedFrameRate = stats.receivedFrameRate;
 			rxStreamType = (RemoteVideoStreamType)stats.rxStreamType;
 		}
 	};
@@ -363,95 +362,15 @@ namespace AgoraClrLibrary {
 			, renderMode(RenderMode::RENDER_MODE_HIDDEN)
 		{}
 
-		agora::rtc::VideoCompositingLayout::Region* toRaw() {
-			VideoCompositingLayout::Region* result = new VideoCompositingLayout::Region();
-			result->uid = uid, result->x = x, result->y = y, result->width = width, result->height = height;
-			result->zOrder = zOrder, result->alpha = alpha;
-			return result;
-		}
-
-		static agora::rtc::VideoCompositingLayout::Region* toRaws(List<ClrRegion^>^ region) {
-			int size = sizeof(VideoCompositingLayout::Region) * region->Count;
-			VideoCompositingLayout::Region* result = static_cast<VideoCompositingLayout::Region*>(Marshal::AllocHGlobal(size).ToPointer());
-			for (int i = 0; i < region->Count; i++) {
-				result[i] = *region[i]->toRaw();
-			}
-			return result;
-		}
+		
 	};
 
-	public ref class ClrVideoCompositingLayout
-	{
-	public:
-		int canvasWidth;
-		int canvasHeight;
-		String^ backgroundColor;//e.g. "#C0C0C0" in RGB
-		List<ClrRegion^>^ regions;
-		String^ appData;
-		ClrVideoCompositingLayout()
-			:canvasWidth(0)
-			, canvasHeight(0)
-			, backgroundColor(nullptr)
-			, regions(nullptr)
-			, appData(nullptr)
-		{}
-
-		agora::rtc::VideoCompositingLayout* toRaw() {
-			VideoCompositingLayout* result = new VideoCompositingLayout();
-			result->canvasHeight = canvasHeight, result->canvasWidth = canvasWidth;
-			result->backgroundColor = MarshalString(backgroundColor).c_str();
-			result->regions = ClrRegion::toRaws(regions), result->regionCount = regions->Count;
-			result->appData = MarshalString(appData).c_str(), result->appDataLength = appData->Length;
-			return result;
-		}
-	};
+	
 
 	public enum class RtmpStreamLifeCycleType
 	{
 		RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL = 1,
 		RTMP_STREAM_LIFE_CYCLE_BIND2OWNER = 2,
-	};
-
-	public ref class ClrPublisherConfiguration {
-	public:
-		int width;
-		int height;
-		int framerate;
-		int bitrate;
-		int defaultLayout;
-		RtmpStreamLifeCycleType lifecycle;
-		bool owner;
-		int injectStreamWidth = 0;
-		int injectStreamHeight = 0;
-		String^ injectStreamUrl = nullptr;
-		String^ publishUrl = nullptr;
-		String^ rawStreamUrl = nullptr;
-		String^ extraInfo = nullptr;
-
-		ClrPublisherConfiguration()
-			: width(640)
-			, height(360)
-			, framerate(15)
-			, bitrate(500)
-			, defaultLayout(1)
-			, lifecycle(RtmpStreamLifeCycleType::RTMP_STREAM_LIFE_CYCLE_BIND2CHANNEL)
-			, owner(true)
-		{}
-
-		agora::rtc::PublisherConfiguration* toRaw() {
-			PublisherConfiguration* result = new PublisherConfiguration();
-			result->width = width; result->height = height;
-			result->framerate = framerate; result->defaultLayout = defaultLayout;
-			result->lifecycle = (RTMP_STREAM_LIFE_CYCLE_TYPE)lifecycle;
-			result->owner = owner; result->publishUrl = MarshalString(publishUrl).c_str();
-			result->injectStreamHeight = injectStreamHeight;
-			result->injectStreamWidth = injectStreamWidth;
-			result->injectStreamUrl = MarshalString(injectStreamUrl).c_str();
-			result->publishUrl = MarshalString(publishUrl).c_str();
-			result->rawStreamUrl = MarshalString(rawStreamUrl).c_str();
-			result->extraInfo = MarshalString(extraInfo).c_str();
-			return result;
-		}
 	};
 
 	public ref class ClrRect {
@@ -1023,9 +942,6 @@ namespace AgoraClrLibrary {
 		int enableDualStreamMode(bool enabled);
 		int setRemoteVideoStreamType(int uid, RemoteVideoStreamType type);
 		int setVideoQualityParameters(bool preferFrameRateOverImageQuality);
-		int setVideoCompositingLayout(ClrVideoCompositingLayout^ sei);
-		int clearVideoCompositingLayout();
-		int configPublisher(ClrPublisherConfiguration^ config);
 		int setChannelProfile(ChannelProfile profile);
 		int setClientRole(ClientRoleType role);
 
