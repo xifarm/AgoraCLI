@@ -338,10 +338,10 @@ int AgoraClr::setRemoteRenderMode(int uid, RenderMode mode)
 	return params.setRemoteRenderMode(uid, (agora::rtc::RENDER_MODE_TYPE)mode);
 }
 
-int AgoraClr::enableAudioVolumeIndication(int interval, int smooth)
+int AgoraClr::enableAudioVolumeIndication(int interval, int smooth, bool report_vad)
 {
 	RtcEngineParameters params(*rtcEngine);
-	return params.enableAudioVolumeIndication(interval, smooth);
+	return params.enableAudioVolumeIndication(interval, smooth, report_vad);
 }
 
 int AgoraClr::startAudioRecording(String ^ path, AudioRecordingQualityType quality)
@@ -1219,6 +1219,11 @@ bool AgoraClrLibrary::AgoraClr::NativeOnCaptureVideoFrame(agora::media::IVideoFr
 bool AgoraClrLibrary::AgoraClr::NativeOnRenderVideoFrame(unsigned int uid, agora::media::IVideoFrameObserver::VideoFrame & frame)
 {
 	bool result = true;
+	if (FilterUID(uid))
+	{
+		return result;
+	}
+
 	if (onRenderVideoFrame) {
 		ClrVideoFrame^ clrFrame = gcnew ClrVideoFrame(frame);
 		result = onRenderVideoFrame(uid, clrFrame);
@@ -1227,3 +1232,38 @@ bool AgoraClrLibrary::AgoraClr::NativeOnRenderVideoFrame(unsigned int uid, agora
 	return result;
 }
 
+void AgoraClrLibrary::AgoraClr::ClearUIDs()
+{
+	this->mUIDBlacklist->Clear();
+}
+
+void AgoraClrLibrary::AgoraClr::AddUIDBlackList(int uid)
+{
+	this->mUIDBlacklist[uid] = true;
+}
+
+bool AgoraClrLibrary::AgoraClr::FilterUID(int uid)
+{
+	if (mUIDBlacklist->ContainsKey(uid))
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void AgoraClrLibrary::AgoraClr::SetParameters(String^ jsonParamter)
+{
+	AParameter apm(rtcEngine);
+	apm->setParameters(MarshalString(jsonParamter).c_str());
+}
+
+void AgoraClrLibrary::AgoraClr::SetVideoFrameFormatPreference(ClrVIDEO_FRAME_TYPE videoType)
+{
+	agoraRawObserver->setVideoFormatPreference((IVideoFrameObserver::VIDEO_FRAME_TYPE)videoType);
+}
+
+ClrVIDEO_FRAME_TYPE AgoraClrLibrary::AgoraClr::GetVideoFrameFormatPreference()
+{
+	return (ClrVIDEO_FRAME_TYPE)agoraRawObserver->getVideoFormatPreference();
+}

@@ -52,7 +52,8 @@ AgoraClrLibrary::AgoraClrVideoDeviceManager::AgoraClrVideoDeviceManager(AgoraClr
 AgoraClrLibrary::ClrVideoDeviceCollection ^ AgoraClrLibrary::AgoraClrVideoDeviceManager::enumerateVideoDevices()
 {
 	AVideoDeviceManager manager(engine->getEngine());
-	return gcnew ClrVideoDeviceCollection(manager->enumerateVideoDevices());
+	agora::rtc::IVideoDeviceCollection* ss = manager->enumerateVideoDevices();
+	return gcnew ClrVideoDeviceCollection(ss);
 }
 
 int AgoraClrLibrary::AgoraClrVideoDeviceManager::setDevice(String ^ deviceId)
@@ -64,7 +65,7 @@ int AgoraClrLibrary::AgoraClrVideoDeviceManager::setDevice(String ^ deviceId)
 int AgoraClrLibrary::AgoraClrVideoDeviceManager::getDevice(String ^ deviceId)
 {
 	AVideoDeviceManager manager(engine->getEngine());
-	return manager->getDevice(const_cast<char*>(MarshalString(deviceId).c_str()));
+	return manager->getDevice(const_cast<char*>(MarshalString2(deviceId).c_str()));
 }
 
 int AgoraClrLibrary::AgoraClrVideoDeviceManager::startDeviceTest(IntPtr hwnd)

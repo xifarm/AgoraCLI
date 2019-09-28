@@ -35,6 +35,14 @@ namespace AgoraClrLibrary {
 		return std::string(pch);
 	}
 
+	static std::string MarshalString2(String^ s) {
+		if (s == nullptr) return std::string();
+		IntPtr middleStr = Runtime::InteropServices::Marshal::StringToHGlobalUni(s);
+		std::string result((char *)middleStr.ToPointer());
+		Runtime::InteropServices::Marshal::FreeHGlobal(middleStr);
+		return result;
+	}
+
 	public enum class VideoProfile
 	{                                   // res       fps  kbps
 		VIDEO_PROFILE_LANDSCAPE_120P = 0,         // 160x120   15
@@ -262,6 +270,21 @@ namespace AgoraClrLibrary {
 
 	public enum class ClrAudioFrameType {
 		FRAME_TYPE_PCM16 = 0,  //PCM 16bit little endian
+	};
+
+	public enum class ClrVIDEO_FRAME_TYPE {
+		/**
+		 * 0: YUV420
+		 */
+		FRAME_TYPE_YUV420 = 0,  // YUV 420 format
+		/**
+		 * 1: YUV422
+		 */
+		FRAME_TYPE_YUV422 = 1,  // YUV 422 format
+		/**
+		 * 2: RGBA
+		 */
+		FRAME_TYPE_RGBA = 2,    // RGBA format
 	};
 
 	public ref class ClrAudioFrame {
@@ -975,7 +998,7 @@ namespace AgoraClrLibrary {
 		int setPlaybackDeviceVolume(int volume);
 		int setLocalRenderMode(RenderMode mode);
 		int setRemoteRenderMode(int uid, RenderMode mode);
-		int enableAudioVolumeIndication(int interval, int smooth);
+		int enableAudioVolumeIndication(int interval, int smooth, bool report_vad);
 		int startAudioRecording(String ^path, AudioRecordingQualityType quality);
 		int stopAudioRecording();
 		int pauseAudioMixing();
@@ -1126,6 +1149,12 @@ namespace AgoraClrLibrary {
 		onCaptureVideoFrame ^onCaptureVideoFrame;
 		onRenderVideoFrame ^onRenderVideoFrame;
 
+		//Filter UID
+		void ClearUIDs();
+		void AddUIDBlackList(int uid);
+		void SetParameters(String^ jsonParamter);
+		void SetVideoFrameFormatPreference(ClrVIDEO_FRAME_TYPE videoType);
+		ClrVIDEO_FRAME_TYPE GetVideoFrameFormatPreference();
 
 	private:
 		agora::rtc::IRtcEngine *rtcEngine;
@@ -1136,6 +1165,10 @@ namespace AgoraClrLibrary {
 		agora::media::IMediaEngine* agoraMediaEngine;
 
 		List<GCHandle> ^gchs;
+		Dictionary<int, bool>^ mUIDBlacklist = gcnew Dictionary<int, bool>();
+
+		//Filter UID
+		bool FilterUID(int uid);
 
 		//Native Agora Event Handler
 		void NativeOnJoinChannelSuccess(const char* channel, uid_t uid, int elapsed);

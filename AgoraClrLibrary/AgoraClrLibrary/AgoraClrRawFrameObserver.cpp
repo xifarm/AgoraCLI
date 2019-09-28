@@ -5,7 +5,7 @@ using namespace AgoraClrLibrary;
 
 AgoraClrRawFrameObserver::AgoraClrRawFrameObserver()
 {
-
+	m_VIDEO_FRAME_TYPE = VIDEO_FRAME_TYPE::FRAME_TYPE_YUV420; //default
 }
 
 bool AgoraClrRawFrameObserver::onRecordAudioFrame(AudioFrame & audioFrame)
@@ -42,4 +42,14 @@ bool AgoraClrRawFrameObserver::onRenderVideoFrame(unsigned int uid, VideoFrame &
 {
 	if (onRenderVideoFrameEvent) return onRenderVideoFrameEvent(uid, videoFrame);
 	else return true;
+}
+
+IVideoFrameObserver::VIDEO_FRAME_TYPE AgoraClrRawFrameObserver::getVideoFormatPreference()
+{
+	return m_VIDEO_FRAME_TYPE;
+}
+
+void AgoraClrRawFrameObserver::setVideoFormatPreference(VIDEO_FRAME_TYPE videoFrame)
+{
+	m_VIDEO_FRAME_TYPE = videoFrame;
 }

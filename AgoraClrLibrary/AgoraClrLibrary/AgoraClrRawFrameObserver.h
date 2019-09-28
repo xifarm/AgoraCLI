@@ -41,6 +41,12 @@ namespace AgoraClrLibrary {
 		// Inherited via IVideoFrameObserver
 		virtual bool onCaptureVideoFrame(VideoFrame & videoFrame) override;
 		virtual bool onRenderVideoFrame(unsigned int uid, VideoFrame & videoFrame) override;
+		virtual VIDEO_FRAME_TYPE getVideoFormatPreference() override;
+		void setVideoFormatPreference(VIDEO_FRAME_TYPE videoFrame);
+
+
+	private:
+		VIDEO_FRAME_TYPE m_VIDEO_FRAME_TYPE;
 	};
 
 }
