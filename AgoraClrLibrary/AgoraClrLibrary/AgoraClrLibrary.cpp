@@ -1232,19 +1232,35 @@ bool AgoraClrLibrary::AgoraClr::NativeOnRenderVideoFrame(unsigned int uid, agora
 	return result;
 }
 
-void AgoraClrLibrary::AgoraClr::ClearUIDs()
+
+void AgoraClrLibrary::AgoraClr::ClearWhiteUIDList()
 {
-	this->mUIDBlacklist->Clear();
+	this->mWhiteUIDList->Clear();
 }
 
-void AgoraClrLibrary::AgoraClr::AddUIDBlackList(int uid)
+void AgoraClrLibrary::AgoraClr::RemoveWhiteUIDList(int uid)
 {
-	this->mUIDBlacklist[uid] = true;
+	this->mWhiteUIDList->Remove(uid);
 }
 
+void AgoraClrLibrary::AgoraClr::AddWhiteUIDList(int uid)
+{
+	if (!this->mWhiteUIDList->Contains(uid))
+	{
+		this->mWhiteUIDList->Add(uid);
+	}
+}
+
+//return true: 过滤
 bool AgoraClrLibrary::AgoraClr::FilterUID(int uid)
 {
-	if (mUIDBlacklist->ContainsKey(uid))
+	//如果没有白名单，则不过滤
+	if (this->mWhiteUIDList->Count <= 0)
+	{
+		return false;
+	}
+
+	if (!mWhiteUIDList->Contains(uid))
 	{
 		return true;
 	}

@@ -1149,9 +1149,10 @@ namespace AgoraClrLibrary {
 		onCaptureVideoFrame ^onCaptureVideoFrame;
 		onRenderVideoFrame ^onRenderVideoFrame;
 
-		//Filter UID
-		void ClearUIDs();
-		void AddUIDBlackList(int uid);
+		//whiteList UID
+		void ClearWhiteUIDList();
+		void RemoveWhiteUIDList(int uid);
+		void AddWhiteUIDList(int uid);
 		void SetParameters(String^ jsonParamter);
 		void SetVideoFrameFormatPreference(ClrVIDEO_FRAME_TYPE videoType);
 		ClrVIDEO_FRAME_TYPE GetVideoFrameFormatPreference();
@@ -1165,7 +1166,7 @@ namespace AgoraClrLibrary {
 		agora::media::IMediaEngine* agoraMediaEngine;
 
 		List<GCHandle> ^gchs;
-		Dictionary<int, bool>^ mUIDBlacklist = gcnew Dictionary<int, bool>();
+		List<int>^ mWhiteUIDList = gcnew List<int>();
 
 		//Filter UID
 		bool FilterUID(int uid);
