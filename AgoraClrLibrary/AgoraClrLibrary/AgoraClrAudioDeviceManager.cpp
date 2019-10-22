@@ -1,6 +1,8 @@
 #include "stdafx.h"
+#include <codecvt>
 #include "AgoraClrAudioDeviceManager.h"
 #include "AgoraClrLibrary.h"
+#include "ConvertStringHelp.h"
 
 using namespace AgoraClrLibrary;
 using namespace agora::rtc;
@@ -25,12 +27,15 @@ int AgoraClrLibrary::ClrAudioDeviceCollection::getCount()
 	return raw->getCount();
 }
 
-int AgoraClrLibrary::ClrAudioDeviceCollection::getDevice(int index, String ^% deviceName, String ^% deviceId)
+int AgoraClrLibrary::ClrAudioDeviceCollection::getDevice(int index, String^% deviceName, String^% deviceId)
 {
 	char deviceNameBuffer[MAX_DEVICE_ID_LENGTH] = { 0 }; char deviceIdBuffer[MAX_DEVICE_ID_LENGTH] = { 0 };
 	int result = raw->getDevice(index, deviceNameBuffer, deviceIdBuffer);
 	if (result != 0) return result;
-	deviceName = gcnew String(deviceNameBuffer), deviceId = gcnew String(deviceIdBuffer);
+
+	deviceName = ConvertUNICODE2String(deviceNameBuffer);
+	//deviceName = gcnew String(deviceNameBuffer), 
+	deviceId = gcnew String(deviceIdBuffer);
 	return result;
 	//	return raw->getDevice(index, const_cast<char*>(MarshalString(deviceName).c_str()), const_cast<char*>(MarshalString(deviceId).c_str()));
 }

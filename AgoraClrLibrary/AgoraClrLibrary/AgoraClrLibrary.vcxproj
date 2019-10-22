@@ -138,6 +138,7 @@
     <ClInclude Include="AgoraClrPacketObserver.h" />
     <ClInclude Include="AgoraClrRawFrameObserver.h" />
     <ClInclude Include="AgoraClrVideoDeviceManager.h" />
+    <ClInclude Include="ConvertStringHelp.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
   </ItemGroup>
