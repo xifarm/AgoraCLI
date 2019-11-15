@@ -338,10 +338,10 @@ int AgoraClr::setRemoteRenderMode(int uid, RenderMode mode)
 	return params.setRemoteRenderMode(uid, (agora::rtc::RENDER_MODE_TYPE)mode);
 }
 
-int AgoraClr::enableAudioVolumeIndication(int interval, int smooth, bool report_vad)
+int AgoraClr::enableAudioVolumeIndication(int interval, int smooth)
 {
 	RtcEngineParameters params(*rtcEngine);
-	return params.enableAudioVolumeIndication(interval, smooth, report_vad);
+	return params.enableAudioVolumeIndication(interval, smooth);
 }
 
 int AgoraClr::startAudioRecording(String ^ path, AudioRecordingQualityType quality)
@@ -1270,16 +1270,10 @@ bool AgoraClrLibrary::AgoraClr::FilterUID(int uid)
 
 void AgoraClrLibrary::AgoraClr::SetParameters(String^ jsonParamter)
 {
+	IntPtr p = Marshal::StringToHGlobalAnsi(jsonParamter);
+	const char* para = static_cast<char*>(p.ToPointer());
+
 	AParameter apm(rtcEngine);
-	apm->setParameters(MarshalString(jsonParamter).c_str());
-}
-
-void AgoraClrLibrary::AgoraClr::SetVideoFrameFormatPreference(ClrVIDEO_FRAME_TYPE videoType)
-{
-	agoraRawObserver->setVideoFormatPreference((IVideoFrameObserver::VIDEO_FRAME_TYPE)videoType);
-}
-
-ClrVIDEO_FRAME_TYPE AgoraClrLibrary::AgoraClr::GetVideoFrameFormatPreference()
-{
-	return (ClrVIDEO_FRAME_TYPE)agoraRawObserver->getVideoFormatPreference();
+	apm->setParameters(para);
+	Marshal::FreeHGlobal(p);
 }

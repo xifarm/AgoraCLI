@@ -998,7 +998,7 @@ namespace AgoraClrLibrary {
 		int setPlaybackDeviceVolume(int volume);
 		int setLocalRenderMode(RenderMode mode);
 		int setRemoteRenderMode(int uid, RenderMode mode);
-		int enableAudioVolumeIndication(int interval, int smooth, bool report_vad);
+		int enableAudioVolumeIndication(int interval, int smooth);
 		int startAudioRecording(String ^path, AudioRecordingQualityType quality);
 		int stopAudioRecording();
 		int pauseAudioMixing();
@@ -1154,8 +1154,6 @@ namespace AgoraClrLibrary {
 		void RemoveWhiteUIDList(int uid);
 		void AddWhiteUIDList(int uid);
 		void SetParameters(String^ jsonParamter);
-		void SetVideoFrameFormatPreference(ClrVIDEO_FRAME_TYPE videoType);
-		ClrVIDEO_FRAME_TYPE GetVideoFrameFormatPreference();
 
 	private:
 		agora::rtc::IRtcEngine *rtcEngine;
