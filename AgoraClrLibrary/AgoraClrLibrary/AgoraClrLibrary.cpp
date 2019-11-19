@@ -1277,3 +1277,15 @@ void AgoraClrLibrary::AgoraClr::SetParameters(String^ jsonParamter)
 	apm->setParameters(para);
 	Marshal::FreeHGlobal(p);
 }
+
+bool AgoraClrLibrary::AgoraClr::GetParameters(String^ jsonParamter)
+{
+	IntPtr p = Marshal::StringToHGlobalAnsi(jsonParamter);
+	const char* para = static_cast<char*>(p.ToPointer());
+	bool ret = false;
+	AParameter apm(rtcEngine);
+	apm->getBool(para, ret);
+	Marshal::FreeHGlobal(p);
+
+	return ret;
+}

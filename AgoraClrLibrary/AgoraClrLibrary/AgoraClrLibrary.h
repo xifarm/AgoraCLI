@@ -1154,6 +1154,7 @@ namespace AgoraClrLibrary {
 		void RemoveWhiteUIDList(int uid);
 		void AddWhiteUIDList(int uid);
 		void SetParameters(String^ jsonParamter);
+		bool GetParameters(String^ jsonParamter);
 
 	private:
 		agora::rtc::IRtcEngine *rtcEngine;
