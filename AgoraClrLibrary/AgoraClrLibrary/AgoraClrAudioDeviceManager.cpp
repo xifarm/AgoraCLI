@@ -14,7 +14,7 @@ ClrAudioDeviceCollection::ClrAudioDeviceCollection(IAudioDeviceCollection* rawCo
 
 AgoraClrLibrary::ClrAudioDeviceCollection::~ClrAudioDeviceCollection()
 {
-	this->release();
+	//this->release();
 	this->!ClrAudioDeviceCollection();
 }
 
@@ -47,7 +47,7 @@ int AgoraClrLibrary::ClrAudioDeviceCollection::setDevice(String ^ deviceId)
 
 void AgoraClrLibrary::ClrAudioDeviceCollection::release()
 {
-	raw->release();
+	//raw->release();
 }
 
 AgoraClrLibrary::AgoraClrAudioDeviceManager::AgoraClrAudioDeviceManager(AgoraClr^ engine)

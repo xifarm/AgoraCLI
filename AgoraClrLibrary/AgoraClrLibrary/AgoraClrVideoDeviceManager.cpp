@@ -10,7 +10,7 @@ AgoraClrLibrary::ClrVideoDeviceCollection::ClrVideoDeviceCollection(IVideoDevice
 
 AgoraClrLibrary::ClrVideoDeviceCollection::~ClrVideoDeviceCollection()
 {
-	this->release();
+	//this->release();
 	this->!ClrVideoDeviceCollection();
 }
 
@@ -44,7 +44,7 @@ int AgoraClrLibrary::ClrVideoDeviceCollection::setDevice(String ^ deviceId)
 
 void AgoraClrLibrary::ClrVideoDeviceCollection::release()
 {
-	raw->release();
+	//raw->release();
 }
 
 AgoraClrLibrary::AgoraClrVideoDeviceManager::AgoraClrVideoDeviceManager(AgoraClr ^ engine)
