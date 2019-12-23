@@ -924,6 +924,7 @@ namespace AgoraClrLibrary {
 	public delegate bool onMixedAudioFrame(ClrAudioFrame^ frame);
 
 	public delegate bool onCaptureVideoFrame(ClrVideoFrame^ frame);
+	public delegate bool onCaptureVideoRGBAFrame(ClrVideoFrameRGBA^ frame);
 	public delegate bool onRenderVideoFrame(int uid, ClrVideoFrame^ frame);
 
 

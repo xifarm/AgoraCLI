@@ -10,7 +10,7 @@ AgoraClrLibrary::ClrVideoDeviceCollection::ClrVideoDeviceCollection(IVideoDevice
 
 AgoraClrLibrary::ClrVideoDeviceCollection::~ClrVideoDeviceCollection()
 {
-	this->release();
+	//this->release();
 	this->!ClrVideoDeviceCollection();
 }
 
@@ -42,10 +42,10 @@ int AgoraClrLibrary::ClrVideoDeviceCollection::setDevice(String ^ deviceId)
 	return raw->setDevice(const_cast<char*>(MarshalString(deviceId).c_str()));
 }
 
-void AgoraClrLibrary::ClrVideoDeviceCollection::release()
-{
-	raw->release();
-}
+//void AgoraClrLibrary::ClrVideoDeviceCollection::release()
+//{
+//	//raw->release();
+//}
 
 AgoraClrLibrary::AgoraClrVideoDeviceManager::AgoraClrVideoDeviceManager(AgoraClr ^ engine)
 {

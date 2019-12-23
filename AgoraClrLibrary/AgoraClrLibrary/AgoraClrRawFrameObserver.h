@@ -10,6 +10,7 @@ namespace AgoraClrLibrary {
 	typedef bool(__stdcall * PFOnPlaybackAudioFrameBeforeMixing)(unsigned int uid, IAudioFrameObserver::AudioFrame & audioFrame);
 
 	typedef bool(__stdcall * PFOnCaptureVideoFrame)(IVideoFrameObserver::VideoFrame & videoFrame);
+	typedef bool(__stdcall* PFOnCaptureVideoFrameRGBA)(VideoFrameRGBA^ videoFrame);
 	typedef bool(__stdcall * PFOnRenderVideoFrame)(unsigned int uid, IVideoFrameObserver::VideoFrame & videoFrame);
 
 	delegate bool NativeOnRecordAudioFrameDelegate(IAudioFrameObserver::AudioFrame & audioFrame);
@@ -30,6 +31,7 @@ namespace AgoraClrLibrary {
 		PFOnPlaybackAudioFrameBeforeMixing onPlaybackAudioFrameBeforeMixingEvent = 0;
 
 		PFOnCaptureVideoFrame onCaptureVideoFrameEvent = 0;
+		PFOnCaptureVideoFrameRGBA onCaptureVideoFrameRGBAEvent = 0;
 		PFOnRenderVideoFrame onRenderVideoFrameEvent = 0;
 
 		// Inherited via IAudioFrameObserver

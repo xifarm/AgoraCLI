@@ -14,7 +14,7 @@ ClrAudioDeviceCollection::ClrAudioDeviceCollection(IAudioDeviceCollection* rawCo
 
 AgoraClrLibrary::ClrAudioDeviceCollection::~ClrAudioDeviceCollection()
 {
-	this->release();
+	//this->release();
 	this->!ClrAudioDeviceCollection();
 }
 
@@ -45,10 +45,10 @@ int AgoraClrLibrary::ClrAudioDeviceCollection::setDevice(String ^ deviceId)
 	return raw->setDevice(MarshalString(deviceId).c_str());
 }
 
-void AgoraClrLibrary::ClrAudioDeviceCollection::release()
-{
-	raw->release();
-}
+//void AgoraClrLibrary::ClrAudioDeviceCollection::release()
+//{
+//	raw->release();
+//}
 
 AgoraClrLibrary::AgoraClrAudioDeviceManager::AgoraClrAudioDeviceManager(AgoraClr^ engine)
 {

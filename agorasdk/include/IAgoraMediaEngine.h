@@ -137,6 +137,7 @@ class IVideoFrameObserver {
     int avsync_type;
   };
 
+
  public:
   /** Retrieves the camera captured image.
 
@@ -149,6 +150,14 @@ class IVideoFrameObserver {
    @param videoFrame VideoFrame
    */
   virtual bool onRenderVideoFrame(unsigned int uid, VideoFrame& videoFrame) = 0;
+};
+
+public ref class VideoFrameRGBA {
+public:
+	void* dst_bgra;
+	 int dst_stride_bgra;
+	 int width;
+	int height;
 };
 
 class IVideoFrame {
