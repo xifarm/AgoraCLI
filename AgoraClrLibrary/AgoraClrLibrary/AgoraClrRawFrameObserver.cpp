@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "AgoraClrRawFrameObserver.h"
-#include "..\..\agorasdk\include\libyuv.h"
 
 using namespace AgoraClrLibrary;
 
@@ -35,16 +34,6 @@ bool AgoraClrRawFrameObserver::onPlaybackAudioFrameBeforeMixing(unsigned int uid
 
 bool AgoraClrRawFrameObserver::onCaptureVideoFrame(VideoFrame & videoFrame)
 {
-	if (onCaptureVideoFrameRGBAEvent)
-	{
-		VideoFrameRGBA^ rbga = gcnew VideoFrameRGBA();
-		
-		int ret = libyuv::I420ToBGRA((uint8_t*)videoFrame.yBuffer, videoFrame.yStride, (uint8_t*)videoFrame.uBuffer, videoFrame.uStride,
-			(uint8_t*)videoFrame.vBuffer, videoFrame.vStride, (uint8_t*)rbga->dst_bgra, rbga->dst_stride_bgra, rbga->width, rbga->height);
-
-		return onCaptureVideoFrameRGBAEvent(rbga);
-	}
-
 	if (onCaptureVideoFrameEvent) return onCaptureVideoFrameEvent(videoFrame);
 	else return true;
 }

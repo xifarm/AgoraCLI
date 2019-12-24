@@ -45,17 +45,10 @@ int AgoraClrLibrary::ClrAudioDeviceCollection::setDevice(String ^ deviceId)
 	return raw->setDevice(MarshalString(deviceId).c_str());
 }
 
-<<<<<<< .mine
 //void AgoraClrLibrary::ClrAudioDeviceCollection::release()
 //{
-//	raw->release();
+//	//raw->release();
 //}
-=======
-void AgoraClrLibrary::ClrAudioDeviceCollection::release()
-{
-	//raw->release();
-}
->>>>>>> .theirs
 
 AgoraClrLibrary::AgoraClrAudioDeviceManager::AgoraClrAudioDeviceManager(AgoraClr^ engine)
 {

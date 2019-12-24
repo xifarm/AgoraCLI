@@ -42,17 +42,12 @@ int AgoraClrLibrary::ClrVideoDeviceCollection::setDevice(String ^ deviceId)
 	return raw->setDevice(const_cast<char*>(MarshalString(deviceId).c_str()));
 }
 
-<<<<<<< .mine
+
 //void AgoraClrLibrary::ClrVideoDeviceCollection::release()
 //{
 //	//raw->release();
 //}
-=======
-void AgoraClrLibrary::ClrVideoDeviceCollection::release()
-{
-	//raw->release();
-}
->>>>>>> .theirs
+
 
 AgoraClrLibrary::AgoraClrVideoDeviceManager::AgoraClrVideoDeviceManager(AgoraClr ^ engine)
 {

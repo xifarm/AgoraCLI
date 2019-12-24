@@ -9,6 +9,8 @@
 #include "AgoraClrVideoDeviceManager.h"
 #include <msclr\marshal_cppstd.h>
 #include <string>
+#include "..\..\agorasdk\include\libyuv.h"
+//#include "..\..\agorasdk\include\libyuv\convert_from.h"
 
 using namespace msclr::interop;
 using namespace System;
@@ -367,6 +369,36 @@ namespace AgoraClrLibrary {
 			Marshal::Copy(ybuffer, 0, IntPtr(raw.yBuffer), size);
 			Marshal::Copy(ubuffer, 0, IntPtr(raw.uBuffer), size / 4);
 			Marshal::Copy(vbuffer, 0, IntPtr(raw.vBuffer), size / 4);
+		}
+	};
+
+	public ref class ClrVideoRGBAFrame {
+	public:
+		
+		int dst_stride_bgra;  
+		int width;  
+		int height; 
+		array<Byte>^ dst_bgra;
+
+		//I420也叫IYUV,也叫YUV420 
+		ClrVideoRGBAFrame(agora::media::IVideoFrameObserver::VideoFrame& videoFrame) {
+			width = videoFrame.width, height = videoFrame.height; 
+			int size = width * height * 4;
+			dst_bgra = gcnew array<Byte>(size);
+
+			uint8_t* dst_bgra = new uint8_t[size];
+			memset(dst_bgra, 0, sizeof(dst_bgra));
+
+			dst_stride_bgra = width * 4;
+			//libyuv::I420ToBGRA  发红色画面
+			//I420ToRGBA  link错误
+			//I420ToABGR pass
+			int ret = libyuv::I420ToABGR((uint8_t*)videoFrame.yBuffer, videoFrame.yStride, (uint8_t*)videoFrame.uBuffer, videoFrame.uStride,
+				(uint8_t*)videoFrame.vBuffer, videoFrame.vStride, dst_bgra, dst_stride_bgra, width, height);
+
+
+			Marshal::Copy(IntPtr(dst_bgra), this->dst_bgra, 0, size);
+			delete[] dst_bgra;
 		}
 	};
 
@@ -924,8 +956,9 @@ namespace AgoraClrLibrary {
 	public delegate bool onMixedAudioFrame(ClrAudioFrame^ frame);
 
 	public delegate bool onCaptureVideoFrame(ClrVideoFrame^ frame);
-	public delegate bool onCaptureVideoRGBAFrame(ClrVideoFrameRGBA^ frame);
+	public delegate bool onCaptureVideoRGBAFrame(ClrVideoRGBAFrame^ frame);
 	public delegate bool onRenderVideoFrame(int uid, ClrVideoFrame^ frame);
+	public delegate bool onRenderVideoRGBAFrame(int uid, ClrVideoRGBAFrame^ frame);
 
 
 	public ref class AgoraClr
@@ -1148,7 +1181,9 @@ namespace AgoraClrLibrary {
 		onMixedAudioFrame ^onMixedAudioFrame;
 
 		onCaptureVideoFrame ^onCaptureVideoFrame;
+		onCaptureVideoRGBAFrame^ onCaptureVideoRGBAFrame;
 		onRenderVideoFrame ^onRenderVideoFrame;
+		onRenderVideoRGBAFrame^ onRenderVideoRGBAFrame;
 
 		//whiteList UID
 		void ClearWhiteUIDList();

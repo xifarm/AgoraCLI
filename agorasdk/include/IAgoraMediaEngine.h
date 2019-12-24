@@ -152,14 +152,6 @@ class IVideoFrameObserver {
   virtual bool onRenderVideoFrame(unsigned int uid, VideoFrame& videoFrame) = 0;
 };
 
-public ref class VideoFrameRGBA {
-public:
-	void* dst_bgra;
-	 int dst_stride_bgra;
-	 int width;
-	int height;
-};
-
 class IVideoFrame {
  public:
   enum PLANE_TYPE { Y_PLANE = 0, U_PLANE = 1, V_PLANE = 2, NUM_OF_PLANES = 3 };

@@ -1211,8 +1211,15 @@ bool AgoraClrLibrary::AgoraClr::NativeOnCaptureVideoFrame(agora::media::IVideoFr
 	if (onCaptureVideoFrame) {
 		ClrVideoFrame^ clrFrame = gcnew ClrVideoFrame(frame);
 		result = onCaptureVideoFrame(clrFrame);
-		if (result) clrFrame->writeRaw(frame);
+		//if (result) clrFrame->writeRaw(frame);
 	}
+	else if (onCaptureVideoRGBAFrame)
+	{
+		ClrVideoRGBAFrame^ clrFrame = gcnew ClrVideoRGBAFrame(frame);
+		result = onCaptureVideoRGBAFrame(clrFrame);
+		//if (result) clrFrame->writeRaw(frame);
+	}
+
 	return result;
 }
 
@@ -1223,11 +1230,15 @@ bool AgoraClrLibrary::AgoraClr::NativeOnRenderVideoFrame(unsigned int uid, agora
 	{
 		return result;
 	}
-
-	if (onRenderVideoFrame) {
+	if (onRenderVideoRGBAFrame)
+	{
+		ClrVideoRGBAFrame^ clrFrame = gcnew ClrVideoRGBAFrame(frame);
+		result = onRenderVideoRGBAFrame(uid, clrFrame);
+	}
+	else if (onRenderVideoFrame) {
 		ClrVideoFrame^ clrFrame = gcnew ClrVideoFrame(frame);
 		result = onRenderVideoFrame(uid, clrFrame);
-		if (result) clrFrame->writeRaw(frame);
+		//if (result) clrFrame->writeRaw(frame);
 	}
 	return result;
 }

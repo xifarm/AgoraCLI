@@ -8,4 +8,5 @@
 #include "../../agorasdk/include/IAgoraRtcEngine.h"
 #pragma comment(lib, "../../agorasdk/lib/agora_rtc_sdk.lib")
 #pragma comment(lib, "../../agorasdk/lib/libyuv.lib")
+#pragma comment(lib, "../../agorasdk/lib/libyuv64.lib")
 
