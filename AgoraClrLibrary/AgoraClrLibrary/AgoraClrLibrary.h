@@ -393,7 +393,9 @@ namespace AgoraClrLibrary {
 			//libyuv::I420ToBGRA  发红色画面
 			//I420ToRGBA  link错误
 			//I420ToABGR pass
-			int ret = libyuv::I420ToABGR((uint8_t*)videoFrame.yBuffer, videoFrame.yStride, (uint8_t*)videoFrame.uBuffer, videoFrame.uStride,
+			//libyuv::I420ToRGBA()
+			//I420ToRGB24 pass
+			int ret = libyuv::I420ToRGBA((uint8_t*)videoFrame.yBuffer, videoFrame.yStride, (uint8_t*)videoFrame.uBuffer, videoFrame.uStride,
 				(uint8_t*)videoFrame.vBuffer, videoFrame.vStride, dst_bgra, dst_stride_bgra, width, height);
 
 
@@ -1183,7 +1185,7 @@ namespace AgoraClrLibrary {
 		onCaptureVideoFrame ^onCaptureVideoFrame;
 		onCaptureVideoRGBAFrame^ onCaptureVideoRGBAFrame;
 		onRenderVideoFrame ^onRenderVideoFrame;
-		onRenderVideoRGBAFrame^ onRenderVideoRGBAFrame;
+		onRenderVideoRGBAFrame^ onRenderVideoRGBAFrame1;
 
 		//whiteList UID
 		void ClearWhiteUIDList();

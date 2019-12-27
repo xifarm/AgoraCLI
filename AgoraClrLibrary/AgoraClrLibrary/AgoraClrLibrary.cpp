@@ -1230,10 +1230,10 @@ bool AgoraClrLibrary::AgoraClr::NativeOnRenderVideoFrame(unsigned int uid, agora
 	{
 		return result;
 	}
-	if (onRenderVideoRGBAFrame)
+	if (onRenderVideoRGBAFrame1)
 	{
 		ClrVideoRGBAFrame^ clrFrame = gcnew ClrVideoRGBAFrame(frame);
-		result = onRenderVideoRGBAFrame(uid, clrFrame);
+		result = onRenderVideoRGBAFrame1(uid, clrFrame);
 	}
 	else if (onRenderVideoFrame) {
 		ClrVideoFrame^ clrFrame = gcnew ClrVideoFrame(frame);
