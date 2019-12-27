@@ -391,11 +391,12 @@ namespace AgoraClrLibrary {
 
 			dst_stride_bgra = width * 4;
 			//libyuv::I420ToBGRA  发红色画面
-			//I420ToRGBA  link错误
-			//I420ToABGR pass
-			//libyuv::I420ToRGBA()
-			//I420ToRGB24 pass
-			int ret = libyuv::I420ToRGBA((uint8_t*)videoFrame.yBuffer, videoFrame.yStride, (uint8_t*)videoFrame.uBuffer, videoFrame.uStride,
+			//I420ToRGBA   蓝色
+			//I420ToABGR 偏色
+			//I420ToRGB24 pass 白色
+			//I420ToARGB 正常
+			//I420ToRAW
+			int ret = libyuv::I420ToARGB((uint8_t*)videoFrame.yBuffer, videoFrame.yStride, (uint8_t*)videoFrame.uBuffer, videoFrame.uStride,
 				(uint8_t*)videoFrame.vBuffer, videoFrame.vStride, dst_bgra, dst_stride_bgra, width, height);
 
 
@@ -1185,7 +1186,7 @@ namespace AgoraClrLibrary {
 		onCaptureVideoFrame ^onCaptureVideoFrame;
 		onCaptureVideoRGBAFrame^ onCaptureVideoRGBAFrame;
 		onRenderVideoFrame ^onRenderVideoFrame;
-		onRenderVideoRGBAFrame^ onRenderVideoRGBAFrame1;
+		onRenderVideoRGBAFrame^ onRenderVideoRGBAFrame;
 
 		//whiteList UID
 		void ClearWhiteUIDList();
