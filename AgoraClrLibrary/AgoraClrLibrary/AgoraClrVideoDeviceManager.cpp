@@ -21,7 +21,7 @@ AgoraClrLibrary::ClrVideoDeviceCollection::!ClrVideoDeviceCollection()
 
 int AgoraClrLibrary::ClrVideoDeviceCollection::getCount()
 {
-	return raw->getCount();
+	return raw != NULL ? raw->getCount() : 0;
 }
 
 int AgoraClrLibrary::ClrVideoDeviceCollection::getDevice(int index, String ^% deviceName, String ^% deviceId)
@@ -57,7 +57,7 @@ AgoraClrLibrary::AgoraClrVideoDeviceManager::AgoraClrVideoDeviceManager(AgoraClr
 AgoraClrLibrary::ClrVideoDeviceCollection ^ AgoraClrLibrary::AgoraClrVideoDeviceManager::enumerateVideoDevices()
 {
 	AVideoDeviceManager manager(engine->getEngine());
-	agora::rtc::IVideoDeviceCollection* ss = manager->enumerateVideoDevices();
+	agora::rtc::IVideoDeviceCollection* ss = manager != NULL ? manager->enumerateVideoDevices() : NULL;
 	return gcnew ClrVideoDeviceCollection(ss);
 }
 
