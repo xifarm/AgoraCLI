@@ -77,21 +77,25 @@ void AgoraClr::release()
 
 int AgoraClr::enableVideo()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->enableVideo();
 }
 
 int AgoraClr::disableVideo()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->disableVideo();
 }
 
 int AgoraClrLibrary::AgoraClr::enableAudio()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->enableAudio();
 }
 
 int AgoraClrLibrary::AgoraClr::disableAudio()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->disableAudio();
 }
 
@@ -103,11 +107,13 @@ int AgoraClrLibrary::AgoraClr::setHightQualityAudioParameters(bool fullband, boo
 
 int AgoraClr::startPreview()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->startPreview();
 }
 
 int AgoraClr::stopPreview()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->stopPreview();
 }
 
@@ -119,6 +125,7 @@ int AgoraClrLibrary::AgoraClr::enableWebSdkInteroperability(bool enabled)
 
 int AgoraClr::joinChannel(String ^ token, String ^ channelName, String ^channelInfo, int uid)
 {
+	if (rtcEngine == NULL) return -1;
 	std::string key = MarshalString(token);
 	std::string name = MarshalString(channelName);
 	std::string info = MarshalString(channelInfo);
@@ -127,26 +134,31 @@ int AgoraClr::joinChannel(String ^ token, String ^ channelName, String ^channelI
 
 int AgoraClr::leaveChannel()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->leaveChannel();
 }
 
 int AgoraClrLibrary::AgoraClr::startScreenCapture(IntPtr windowId, int captureFreq, ClrRect^ rect, int bitrate)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->startScreenCapture((HWND)windowId.ToPointer(), captureFreq, rect->toRaw(), bitrate);
 }
 
 int AgoraClrLibrary::AgoraClr::stopScreenCapture()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->stopScreenCapture();
 }
 
 int AgoraClrLibrary::AgoraClr::updateScreenCaptureRegion(ClrRect ^ rect)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->updateScreenCaptureRegion(rect->toRaw());
 }
 
 int AgoraClr::renewToken(String ^ token)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->renewToken(MarshalString(token).c_str());
 }
 
@@ -158,6 +170,7 @@ int AgoraClrLibrary::AgoraClr::setEncryptionSecret(String ^ key)
 
 int AgoraClrLibrary::AgoraClr::setEncryptionMode(String ^ mode)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->setEncryptionMode(MarshalString(mode).c_str());
 }
 
@@ -175,46 +188,55 @@ int AgoraClr::getCallId(String ^% id)
 
 int AgoraClr::rate(String ^ callid, int rating, String ^ desc)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->rate(MarshalString(callid).c_str(), rating, MarshalString(desc).c_str());
 }
 
 int AgoraClr::complain(String ^ callid, String ^ desc)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->complain(MarshalString(callid).c_str(), MarshalString(desc).c_str());
 }
 
 int AgoraClr::startEchoTest()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->startEchoTest();
 }
 
 int AgoraClr::stopEchoTest()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->stopEchoTest();
 }
 
 int AgoraClr::enableLastmileTest()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->enableLastmileTest();
 }
 
 int AgoraClr::disableLastmileTest()
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->disableLastmileTest();
 }
 
 int AgoraClr::setVideoProfile(VideoProfile profile, bool swapWidthAndHeight)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->setVideoProfile((agora::rtc::VIDEO_PROFILE_TYPE)profile, swapWidthAndHeight);
 }
 
 int AgoraClr::setupLocalVideo(IntPtr view, int renderMode, int uid)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->setupLocalVideo(agora::rtc::VideoCanvas(view.ToPointer(), renderMode, uid));
 }
 
 int AgoraClr::setupRemoteVideo(IntPtr view, int renderMode, int uid)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->setupRemoteVideo(agora::rtc::VideoCanvas(view.ToPointer(), renderMode, uid));
 }
 
@@ -243,11 +265,13 @@ int AgoraClr::setChannelProfile(ChannelProfile profile)
 
 int AgoraClrLibrary::AgoraClr::setClientRole(ClientRoleType role)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->setClientRole((CLIENT_ROLE_TYPE)role);
 }
 
 int AgoraClr::createDataStream(int % id)
 {
+	if (rtcEngine == NULL) return -1;
 	int streamId;
 	int result = rtcEngine->createDataStream(&streamId, true, true);
 	id = streamId;
@@ -256,6 +280,7 @@ int AgoraClr::createDataStream(int % id)
 
 int AgoraClr::sendStreamMessage(int id, String ^ data)
 {
+	if (rtcEngine == NULL) return -1;
 	std::string dataStr = MarshalString(data);
 	return rtcEngine->sendStreamMessage(id, dataStr.c_str(), dataStr.length());
 }
@@ -406,6 +431,7 @@ int AgoraClr::stopAudioMixing()
 
 int AgoraClrLibrary::AgoraClr::setAudioProfile(AudioProfileType profile, AudioScenarioType scenario)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->setAudioProfile((agora::rtc::AUDIO_PROFILE_TYPE)profile, (agora::rtc::AUDIO_SCENARIO_TYPE)scenario);
 }
 
@@ -493,16 +519,19 @@ int AgoraClrLibrary::AgoraClr::pushAudioFrame(ClrAudioFrameType type, ClrAudioFr
 
 int AgoraClrLibrary::AgoraClr::addPublishStreamUrl(String ^ url, bool transcodingEnabled)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->addPublishStreamUrl(MarshalString(url).c_str(), transcodingEnabled);
 }
 
 int AgoraClrLibrary::AgoraClr::removePublishStreamUrl(String ^ url)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->removePublishStreamUrl(MarshalString(url).c_str());
 }
 
 int AgoraClrLibrary::AgoraClr::setLiveTranscoding(ClrLiveTranscoding ^ transcoding)
 {
+	if (rtcEngine == NULL) return -1;
 	LiveTranscoding lt;
 	transcoding->writeRaw(lt);
 	return rtcEngine->setLiveTranscoding(lt);
@@ -510,6 +539,7 @@ int AgoraClrLibrary::AgoraClr::setLiveTranscoding(ClrLiveTranscoding ^ transcodi
 
 int AgoraClrLibrary::AgoraClr::addInjectStreamUrl(String ^ url, ClrInjectStreamConfig ^ config)
 {
+	if (rtcEngine == NULL) return -1;
 	InjectStreamConfig raw;
 	config->writeRaw(raw);
 	return rtcEngine->addInjectStreamUrl(MarshalString(url).c_str(), raw);
@@ -517,6 +547,7 @@ int AgoraClrLibrary::AgoraClr::addInjectStreamUrl(String ^ url, ClrInjectStreamC
 
 int AgoraClrLibrary::AgoraClr::removeInjectStreamUrl(String ^ url)
 {
+	if (rtcEngine == NULL) return -1;
 	return rtcEngine->removeInjectStreamUrl(MarshalString(url).c_str());
 }
 
@@ -1281,6 +1312,7 @@ bool AgoraClrLibrary::AgoraClr::FilterUID(int uid)
 
 void AgoraClrLibrary::AgoraClr::SetParameters(String^ jsonParamter)
 {
+	if (rtcEngine == NULL) return ;
 	IntPtr p = Marshal::StringToHGlobalAnsi(jsonParamter);
 	const char* para = static_cast<char*>(p.ToPointer());
 
@@ -1291,6 +1323,7 @@ void AgoraClrLibrary::AgoraClr::SetParameters(String^ jsonParamter)
 
 bool AgoraClrLibrary::AgoraClr::GetParameters(String^ jsonParamter)
 {
+	if (rtcEngine == NULL) return false;
 	IntPtr p = Marshal::StringToHGlobalAnsi(jsonParamter);
 	const char* para = static_cast<char*>(p.ToPointer());
 	bool ret = false;

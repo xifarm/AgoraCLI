@@ -42,7 +42,7 @@ int AgoraClrLibrary::ClrAudioDeviceCollection::getDevice(int index, String^% dev
 
 int AgoraClrLibrary::ClrAudioDeviceCollection::setDevice(String^ deviceId)
 {
-	return raw->setDevice(MarshalString(deviceId).c_str());
+	return raw != NULL ? raw->setDevice(MarshalString(deviceId).c_str()) : -1;
 }
 
 //void AgoraClrLibrary::ClrAudioDeviceCollection::release()
@@ -70,18 +70,21 @@ ClrAudioDeviceCollection^ AgoraClrLibrary::AgoraClrAudioDeviceManager::enumerate
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::setPlaybackDevice(String^ deviceId)
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->setPlaybackDevice(MarshalString(deviceId).c_str());
 }
 
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::setRecordingDevice(String^ deviceId)
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->setRecordingDevice(MarshalString(deviceId).c_str());
 }
 
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::setPlaybackDeviceVolume(int volume)
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->setPlaybackDeviceVolume(volume);
 }
 
@@ -89,6 +92,8 @@ int AgoraClrLibrary::AgoraClrAudioDeviceManager::getPlaybackDeviceVolume(int% vo
 {
 	int v;
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
+
 	int result = manager->getPlaybackDeviceVolume(&v);
 	volume = v;
 	return result;
@@ -97,6 +102,7 @@ int AgoraClrLibrary::AgoraClrAudioDeviceManager::getPlaybackDeviceVolume(int% vo
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::setRecordingDeviceVolume(int volume)
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->setRecordingDeviceVolume(volume);
 }
 
@@ -104,6 +110,7 @@ int AgoraClrLibrary::AgoraClrAudioDeviceManager::getRecordingDeviceVolume(int% v
 {
 	int v, result;
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	result = manager->getRecordingDeviceVolume(&v);
 	volume = v;
 	return result;
@@ -112,6 +119,7 @@ int AgoraClrLibrary::AgoraClrAudioDeviceManager::getRecordingDeviceVolume(int% v
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::setPlaybackDeviceMute(bool mute)
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->setPlaybackDeviceMute(mute);
 }
 
@@ -119,6 +127,7 @@ int AgoraClrLibrary::AgoraClrAudioDeviceManager::getPlaybackDeviceMute(bool% mut
 {
 	bool m;
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	int result = manager->getPlaybackDeviceMute(&m);
 	mute = m;
 	return result;
@@ -127,6 +136,7 @@ int AgoraClrLibrary::AgoraClrAudioDeviceManager::getPlaybackDeviceMute(bool% mut
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::setRecordingDeviceMute(bool mute)
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->setRecordingDeviceMute(mute);
 }
 
@@ -134,6 +144,7 @@ int AgoraClrLibrary::AgoraClrAudioDeviceManager::getRecordingDeviceMute(bool& mu
 {
 	bool m;
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	int result = manager->getRecordingDeviceMute(&m);
 	mute = m;
 	return result;
@@ -142,24 +153,28 @@ int AgoraClrLibrary::AgoraClrAudioDeviceManager::getRecordingDeviceMute(bool& mu
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::startPlaybackDeviceTest(String^ path)
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->startPlaybackDeviceTest(MarshalString(path).c_str());
 }
 
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::stopPlaybackDeviceTest()
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->stopPlaybackDeviceTest();
 }
 
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::startRecordingDeviceTest(int indicationInterval)
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->startRecordingDeviceTest(indicationInterval);
 }
 
 int AgoraClrLibrary::AgoraClrAudioDeviceManager::stopRecordingDeviceTest()
 {
 	AAudioDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->stopRecordingDeviceTest();
 }
 

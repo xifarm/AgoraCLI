@@ -39,7 +39,7 @@ int AgoraClrLibrary::ClrVideoDeviceCollection::getDevice(int index, String ^% de
 
 int AgoraClrLibrary::ClrVideoDeviceCollection::setDevice(String ^ deviceId)
 {
-	return raw->setDevice(const_cast<char*>(MarshalString(deviceId).c_str()));
+	return raw != NULL ? raw->setDevice(const_cast<char*>(MarshalString(deviceId).c_str())) : -1;
 }
 
 
@@ -64,23 +64,27 @@ AgoraClrLibrary::ClrVideoDeviceCollection ^ AgoraClrLibrary::AgoraClrVideoDevice
 int AgoraClrLibrary::AgoraClrVideoDeviceManager::setDevice(String ^ deviceId)
 {
 	AVideoDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->setDevice(MarshalString(deviceId).c_str());
 }
 
 int AgoraClrLibrary::AgoraClrVideoDeviceManager::getDevice(String ^ deviceId)
 {
 	AVideoDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->getDevice(const_cast<char*>(MarshalString2(deviceId).c_str()));
 }
 
 int AgoraClrLibrary::AgoraClrVideoDeviceManager::startDeviceTest(IntPtr hwnd)
 {
 	AVideoDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->startDeviceTest(hwnd.ToPointer());
 }
 
 int AgoraClrLibrary::AgoraClrVideoDeviceManager::stopDeviceTest()
 {
 	AVideoDeviceManager manager(engine->getEngine());
+	if (manager == NULL) return -1;
 	return manager->stopDeviceTest();
 }
